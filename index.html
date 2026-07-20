@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A free, inspectable demonstration of turning five web pages into a prioritised accessibility remediation backlog.">
+  <title>Five Page Focus — free accessibility triage demonstration</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="index.html" aria-label="Five Page Focus demonstration home">
+        <span class="brand-mark" aria-hidden="true">5</span>
+        <span>Five Page Focus</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="#method">Method</a></li>
+          <li><a href="#boundaries">Boundaries</a></li>
+          <li><a href="sample-report.html">Sample report</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <p class="eyebrow">Free public demonstration</p>
+          <h1>Turn five web pages into a remediation backlog.</h1>
+          <p class="hero-copy">See how automated evidence and focused manual checks can be reviewed, consolidated, and turned into eight developer-ready root-cause findings.</p>
+          <div class="button-row">
+            <a class="button button-primary" href="sample-report.html">Read the demonstration report</a>
+            <a class="button button-secondary" href="#method">See the method</a>
+          </div>
+        </div>
+        <aside class="summary-card" aria-labelledby="summary-title">
+          <p class="card-kicker">W3C CityLights “Before” demo</p>
+          <h2 id="summary-title">A real five-page sample</h2>
+          <dl>
+            <div><dt>Pages sampled</dt><dd>5</dd></div>
+            <div><dt>Automated affected elements</dt><dd>203</dd></div>
+            <div><dt>Consolidated findings</dt><dd>8</dd></div>
+          </dl>
+          <p class="small">No client website, customer information, or private data is used.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="eyebrow">A disciplined first pass</p>
+          <h2>From mixed evidence to fixable tasks</h2>
+          <p>The workflow keeps machine output in its proper place: useful evidence that still needs human judgement.</p>
+        </div>
+        <ol class="method-grid">
+          <li><strong>Choose the sample.</strong><span>Select one to five public pages that represent an important journey or shared templates.</span></li>
+          <li><strong>Collect evidence.</strong><span>Run automated checks and capture desktop and narrow-screen states without treating tool output as a verdict.</span></li>
+          <li><strong>Review manually.</strong><span>Check keyboard access, focus, structure, forms, images, links, contrast, language, and reflow.</span></li>
+          <li><strong>Consolidate.</strong><span>Remove false positives and group repeated component defects by root cause.</span></li>
+          <li><strong>Prioritise.</strong><span>Order findings by user impact, reach, and dependencies—not by a made-up score.</span></li>
+          <li><strong>Define the re-test.</strong><span>Give each recommendation a specific condition that can be checked after remediation.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section report-section">
+      <div class="shell report-grid">
+        <div>
+          <p class="eyebrow">Inspect the finished output</p>
+          <h2>CityLights accessibility triage</h2>
+          <p>The completed report records scope, methods, limitations, evidence, priorities, ownership suggestions, and re-test steps. It is demonstration work, not a customer case study.</p>
+          <a class="text-link" href="sample-report.html">Open the standalone HTML report</a>
+        </div>
+        <div class="finding-list">
+          <span>Keyboard and focus</span>
+          <span>Page structure</span>
+          <span>Forms and labels</span>
+          <span>Images and links</span>
+          <span>Contrast and reflow</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section boundaries-section" id="boundaries">
+      <div class="shell boundary-grid">
+        <div>
+          <p class="eyebrow">Clear boundaries</p>
+          <h2>Useful triage without an inflated promise</h2>
+        </div>
+        <div>
+          <p>A five-page sample can reveal high-confidence patterns and create a practical starting backlog. It cannot establish whole-site conformance or replace evaluation by disabled people and assistive-technology users.</p>
+          <p>This demonstration is not certification, legal advice, disabled-user research, a complete WCAG conformance evaluation, or a guarantee that every barrier was found.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section product-section" aria-labelledby="product-title">
+      <div class="shell product-panel">
+        <div>
+          <p class="eyebrow">Commercial disclosure</p>
+          <h2 id="product-title">Want the packaged local workflow?</h2>
+          <p>Five Page Focus sells a £29 toolkit with pinned Playwright and axe-core dependencies, machine-assisted probes, a 12-part manual checklist, report templates, a renderer, and the completed demonstration. This free page and report remain useful without buying it.</p>
+        </div>
+        <a class="button button-primary" href="https://gissuliman.gumroad.com/l/five-page-accessibility-triage-kit?utm_source=github&amp;utm_medium=repository&amp;utm_campaign=five_page_workflow">View the £29 kit on Gumroad</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <p><strong>Five Page Focus</strong> is a trading name of Suliman Tadros, sole trader.<br>2 Rosecroft Gardens, London NW2 6HX.</p>
+      <p>Product support: gissuliman@gmail.com<br>Please do not send client URLs, credentials, evidence, or personal data in an initial support message.</p>
+      <p>This static demonstration uses no forms, analytics, advertising, cookies, or remote fonts.</p>
+    </div>
+  </footer>
+</body>
+</html>

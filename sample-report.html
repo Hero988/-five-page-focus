@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CityLights accessibility triage — demonstration report</title>
+  <style>:root {
+  color-scheme: light;
+  --ink: #18212f;
+  --muted: #526071;
+  --line: #ccd4df;
+  --surface: #f5f7fa;
+  --accent: #075985;
+  --accent-soft: #e0f2fe;
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 100%; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: #fff;
+  font: 1rem/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+main {
+  width: min(100% - 2rem, 72rem);
+  margin: 0 auto;
+  padding: 3rem 0 6rem;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: #0f172a;
+}
+
+h2 {
+  margin: 3rem 0 1rem;
+  padding-bottom: .45rem;
+  border-bottom: 2px solid var(--line);
+  font-size: 1.75rem;
+}
+
+h3 {
+  margin: 2.25rem 0 .75rem;
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+
+p, li { max-width: 78ch; }
+
+a {
+  color: #075985;
+  text-decoration-thickness: .12em;
+  text-underline-offset: .18em;
+}
+
+a:focus-visible {
+  outline: 3px solid #ca8a04;
+  outline-offset: 3px;
+}
+
+code {
+  padding: .12rem .28rem;
+  border-radius: .2rem;
+  background: #eef2f6;
+  overflow-wrap: anywhere;
+}
+
+table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-size: .94rem;
+}
+
+th, td {
+  padding: .7rem .75rem;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: #0f172a;
+  background: var(--accent-soft);
+}
+
+tbody tr:nth-child(even) { background: var(--surface); }
+
+blockquote {
+  margin-inline: 0;
+  padding: .8rem 1rem;
+  border-left: .3rem solid var(--accent);
+  background: var(--surface);
+}
+
+@media (max-width: 48rem) {
+  main { width: min(100% - 1rem, 72rem); padding-top: 1.5rem; }
+  table { display: block; overflow-x: auto; }
+}
+
+@media print {
+  body { font-size: 10.5pt; }
+  main { width: 100%; padding: 0; }
+  h2, h3 { break-after: avoid; }
+  table, pre, blockquote { break-inside: avoid; }
+  a { color: inherit; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .8em; }
+}
+</style>
+</head>
+<body>
+  <main id="main-content">
+    <h1>CityLights accessibility triage — demonstration report</h1>
+<p>Prepared on: 20 July 2026<br>Pages tested: 5<br>Reference target: WCAG 2.2 Level A and AA</p>
+<h2>What this report is</h2>
+<p>This is a sample deliverable using W3C&#39;s deliberately inaccessible CityLights
+“Before” demo. It shows the format and evidence standard for the proposed service; it
+is not client work.</p>
+<p>The triage identifies likely barriers on five specified page regions and gives
+prioritised remediation guidance. It is not certification, a full WCAG conformance
+evaluation, legal advice, or a guarantee that every barrier has been found. W3C notes
+that evaluation tools cannot determine accessibility and require human judgement.</p>
+<h2>Executive summary</h2>
+<p>The highest-leverage fix is to replace the shared image-and-table template with
+semantic HTML. Across the five sampled page regions, axe-core found <strong>203 affected
+elements across 19 page/rule combinations and five distinct rule types</strong>. These are
+occurrence counts, not an accessibility score and not a count of every WCAG failure.</p>
+<p>Manual review found four additional cross-page patterns that automation did not count:
+keyboard focus is intentionally discarded on links; visual headings and page regions
+have no semantic structure; the 800px layout requires 480px of horizontal scrolling at
+a 320px viewport; and the document language is undeclared. The Survey page adds a
+task-blocking form-label pattern.</p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Finding</th>
+<th>Affected scope</th>
+<th>Recommended owner</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Critical</td>
+<td>Missing image alternatives</td>
+<td>150 elements; all 5 pages</td>
+<td>Content + engineering</td>
+</tr>
+<tr>
+<td>Critical</td>
+<td>Form controls have no accessible name</td>
+<td>17 elements; all pages, concentrated on Survey</td>
+<td>Engineering</td>
+</tr>
+<tr>
+<td>High</td>
+<td>Image links have no discernible name</td>
+<td>23 links; all 5 pages</td>
+<td>Engineering</td>
+</tr>
+<tr>
+<td>High</td>
+<td>Focus is removed from interactive elements</td>
+<td>32 explicit handlers; all 5 pages</td>
+<td>Engineering</td>
+</tr>
+<tr>
+<td>High</td>
+<td>No semantic headings or landmarks in the demo region</td>
+<td>All 5 pages</td>
+<td>Engineering/content</td>
+</tr>
+<tr>
+<td>High</td>
+<td>Fixed-width content does not reflow</td>
+<td>All 5 pages</td>
+<td>Front-end/design</td>
+</tr>
+<tr>
+<td>High</td>
+<td>Text contrast is below the minimum</td>
+<td>13 elements; Home, Tickets, Template</td>
+<td>Design/front-end</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>Page language is not declared</td>
+<td>All 5 documents</td>
+<td>Engineering</td>
+</tr>
+</tbody></table>
+<h2>Scope and environment</h2>
+<p>The tested region was <code>#page</code>, excluding W3C&#39;s surrounding demonstration controls:</p>
+<ol>
+<li><code>https://www.w3.org/WAI/demos/bad/before/home.html</code></li>
+<li><code>https://www.w3.org/WAI/demos/bad/before/news.html</code></li>
+<li><code>https://www.w3.org/WAI/demos/bad/before/tickets.html</code></li>
+<li><code>https://www.w3.org/WAI/demos/bad/before/survey.html</code></li>
+<li><code>https://www.w3.org/WAI/demos/bad/before/template.html</code></li>
+</ol>
+<p>Tested 20 July 2026 in headless Chromium 149.0.7827.55 at 1440×1000 and 320×900 CSS
+pixels. Automated evidence used axe-core 4.12.1 with its WCAG 2 A/AA, 2.1 A/AA and
+2.2 AA tags. Manual review used keyboard/focus probes, DOM and accessibility structure
+inspection, source review, and visual inspection of desktop and narrow screenshots.</p>
+<p>Not tested: assistive-technology/browser combinations with a human screen-reader user,
+mobile screen readers, captions/audio description (no relevant media in scope),
+authenticated states, external destinations, or a complete user-research evaluation.
+The <code>lang</code> check applies to the document root outside the scoped <code>#page</code> scan and is
+therefore recorded as a manual finding.</p>
+<h2>Findings</h2>
+<h3>F-01 — Images are unavailable or noisy to non-visual users</h3>
+<p>Priority: Critical<br>Status: Confirmed<br>WCAG mapping: 1.1.1 Non-text Content (A)<br>Affected: 150 images across all five pages (Home 33, News 39, Tickets 26, Survey 24,
+Template 28)</p>
+<p>User impact: Screen-reader users may miss meaningful content and linked destinations.
+Decorative layout slices without empty alternatives can also create a long stream of
+irrelevant file information.</p>
+<p>Evidence: axe rule <code>image-alt</code>. Example:
+<code>img[src$=&quot;border_left_top.gif&quot;]</code> has no <code>alt</code> attribute. Raw selectors and HTML are
+stored in each page JSON file. The Home screenshot also shows content images whose
+purpose must be judged in context rather than assigned generic text.</p>
+<p>Recommended fix: Classify every image by purpose. Give informative images concise,
+context-specific alternatives; give decorative images <code>alt=&quot;&quot;</code>; give image links an
+accessible name that describes the destination. Prefer CSS for visual decoration and
+real text for text rendered as images. Do not mechanically add filenames or the word
+“image”.</p>
+<p>Re-test: Inspect the accessibility tree and read the page in sequence. Every meaningful
+image should convey an equivalent purpose once; decorative images should be silent;
+the automated <code>image-alt</code> rule should report no confirmed violations.</p>
+<h3>F-02 — Form controls have no programmatic labels</h3>
+<p>Priority: Critical<br>Status: Confirmed<br>WCAG mapping: 1.3.1 Info and Relationships (A), 3.3.2 Labels or Instructions (A),
+4.1.2 Name, Role, Value (A)<br>Affected: 17 automated occurrences: 11 inputs on Survey and six unnamed select
+elements across the sample</p>
+<p>User impact: Screen-reader and voice-input users cannot reliably discover what the
+quick menu, radio buttons, text inputs, or Survey select request. The visual proximity
+of text does not create a programmatic relationship.</p>
+<p>Evidence: axe rules <code>label</code> and <code>select-name</code>. Example:
+<code>input[type=&quot;radio&quot;][name=&quot;res&quot;][value=&quot;1&quot;]</code> has no associated <code>label</code>, <code>aria-label</code>,
+or <code>aria-labelledby</code>. The manual inventory found 13 Survey controls without a
+programmatic label when all input/select elements were considered.</p>
+<p>Recommended fix: Use visible <code>&lt;label for&gt;</code> text with unique control IDs. Wrap related
+radio groups in <code>&lt;fieldset&gt;</code> with a descriptive <code>&lt;legend&gt;</code>. Give each select a persistent
+visible label. Keep instructions and error references programmatically connected with
+<code>aria-describedby</code> only where native HTML is insufficient.</p>
+<p>Re-test: Navigate controls with a keyboard and inspect their computed accessible names.
+Each name should be unique enough to answer “what value belongs here?” without nearby
+visual context.</p>
+<h3>F-03 — Image links have no discernible destination</h3>
+<p>Priority: High<br>Status: Confirmed<br>WCAG mapping: 2.4.4 Link Purpose (In Context) (A), 4.1.2 Name, Role, Value (A)<br>Affected: 23 links across all five pages</p>
+<p>User impact: A screen-reader links list contains unnamed items, so navigation becomes
+guesswork. Voice users also lack a reliable name by which to activate the link.</p>
+<p>Evidence: axe rule <code>link-name</code>. Example navigation link:
+<code>a[href=&quot;javascript:location.href=&#39;home.html&#39;;&quot;]</code> contains an image without an
+accessible alternative and has no other accessible text.</p>
+<p>Recommended fix: Use ordinary destination URLs in <code>href</code> and meaningful text. If an
+image must be the only link content, its alternative should name the destination.
+Avoid redundant <code>aria-label</code> values that conflict with visible text.</p>
+<p>Re-test: Review the links list without surrounding visual layout. Every item should
+identify its destination or action, and activation should work without JavaScript.</p>
+<h3>F-04 — Focus is deliberately removed from links</h3>
+<p>Priority: High<br>Status: Confirmed by focus probe and source inspection<br>WCAG mapping: 2.1.1 Keyboard (A), 2.4.7 Focus Visible (AA), 3.2.1 On Focus (A)<br>Affected: 32 elements with explicit focus-blur handlers across all five pages</p>
+<p>User impact: Keyboard users lose their position and may be unable to perceive or
+operate primary navigation. The behaviour also breaks predictable focus order.</p>
+<p>Evidence: Programmatically focusing the sampled navigation links did not retain focus.
+Example: <code>onfocus=&quot;blur();&quot;</code> on the Home link produced <code>retainedFocus: false</code> and no
+visible outline. Counts by page: Home 14, News 4, Tickets 4, Survey 4, Template 6.</p>
+<p>Recommended fix: Remove all focus-blur handlers. Use native links/buttons and provide a
+high-contrast <code>:focus-visible</code> indicator that is at least as clear as the hover state.
+Do not change context merely because a control receives focus.</p>
+<p>Re-test: Starting at the browser chrome, traverse the complete page with <code>Tab</code> and
+<code>Shift+Tab</code>. Focus should remain visible, move logically, and permit activation with
+<code>Enter</code> or <code>Space</code> as appropriate.</p>
+<h3>F-05 — Visual structure has no semantic equivalent</h3>
+<p>Priority: High<br>Status: Confirmed by DOM inspection<br>WCAG mapping: 1.3.1 Info and Relationships (A), 2.4.1 Bypass Blocks (A), 2.4.6
+Headings and Labels (AA)<br>Affected: all five pages</p>
+<p>User impact: Screen-reader users cannot navigate by heading or region, and the table-
+based layout produces a less understandable reading structure when presentation is
+removed.</p>
+<p>Evidence: Within each <code>#page</code> region, the inventory found zero <code>h1</code>–<code>h6</code> elements,
+zero native landmarks, zero ARIA landmarks, and no local skip link. Text such as
+“Welcome to CityLights” and “Citylights Survey” is styled visually instead of marked
+as a heading.</p>
+<p>Recommended fix: Build the shared page shell with <code>header</code>, <code>nav</code>, <code>main</code>, and <code>footer</code>;
+use a descriptive page <code>h1</code> and nested headings based on content structure. Add a skip
+link that moves focus to <code>main</code>. Use data tables only for data and include correct
+headers; use CSS layout for presentation.</p>
+<p>Re-test: Inspect the heading outline, landmark list, and CSS-free reading order. They
+should provide a concise map that matches the visual page.</p>
+<h3>F-06 — Fixed-width content does not reflow</h3>
+<p>Priority: High<br>Status: Confirmed by viewport measurement and screenshot<br>WCAG mapping: 1.4.10 Reflow (AA)<br>Affected: all five pages</p>
+<p>User impact: People who zoom substantially or use a narrow screen must pan horizontally
+to follow lines and operate controls, making content easy to lose.</p>
+<p>Evidence: At a 320 CSS-pixel viewport, each scoped region retained an 800px scroll
+width—<strong>480px wider than the viewport</strong>. The narrow screenshots show the desktop layout
+cropped rather than reorganised.</p>
+<p>Recommended fix: Replace fixed table widths and pixel-positioned layout with responsive
+CSS. Allow text and content columns to wrap; stack secondary columns; keep horizontal
+scrolling only for genuine two-dimensional content such as a wide data table.</p>
+<p>Re-test: At 320 CSS pixels and at 400% browser zoom from a 1280px desktop viewport,
+users should read and operate ordinary content without horizontal scrolling.</p>
+<h3>F-07 — Text contrast is below the minimum</h3>
+<p>Priority: High<br>Status: Confirmed automatically and visually spot-checked<br>WCAG mapping: 1.4.3 Contrast (Minimum) (AA)<br>Affected: 13 elements on Home (2), Tickets (9), and Template (2)</p>
+<p>User impact: Low-vision users and people using low-quality or glare-affected displays
+may not be able to read key labels and table content.</p>
+<p>Evidence: axe rule <code>color-contrast</code>. Example: foreground <code>#41545d</code> on background
+<code>#a9b8bf</code> measured <strong>3.88:1</strong> for text that requires 4.5:1.</p>
+<p>Recommended fix: Update design tokens rather than patching instances. Use a foreground/
+background pair of at least 4.5:1 for normal text and 3:1 only where the text genuinely
+meets WCAG&#39;s large-text definition. Recheck hover, focus, selected, and disabled states.</p>
+<p>Re-test: Measure rendered colours at the actual font size/weight and confirm the
+minimum ratio in every state.</p>
+<h3>F-08 — The document language is undeclared</h3>
+<p>Priority: Medium<br>Status: Confirmed by document-root inspection<br>WCAG mapping: 3.1.1 Language of Page (A)<br>Affected: all five documents</p>
+<p>User impact: Screen readers may choose the wrong pronunciation rules and voice.</p>
+<p>Evidence: <code>document.documentElement.getAttribute(&#39;lang&#39;)</code> returned <code>null</code> on every URL.</p>
+<p>Recommended fix: Add the correct BCP 47 language to the root, for example
+<code>&lt;html lang=&quot;en&quot;&gt;</code>, and mark meaningful passages in another language separately.</p>
+<p>Re-test: Inspect the DOM and accessibility tree and confirm the default and any
+language changes match the content.</p>
+<h2>Recommended remediation sequence</h2>
+<ol>
+<li>Rebuild the shared shell once: semantic regions/headings, responsive layout, native
+links, preserved focus, named quick menu, document language, and image policy.</li>
+<li>Fix the Survey form with labels, fieldset/legend grouping, and accessible validation;
+then complete an empty/invalid/valid submission keyboard test.</li>
+<li>Correct shared colour tokens and review the remaining meaningful images and link
+purposes page by page.</li>
+<li>Re-run the same five-page configuration and manual checks, recording fixed, partly
+fixed, not fixed, or unable to retest for each finding.</li>
+</ol>
+<h2>Limitations and next step</h2>
+<p>This triage intentionally samples five public page regions. A full evaluation would
+also cover complete user processes, responsive states, supported assistive-technology
+combinations, documents and media, dynamic behaviours, and representative disabled-
+user testing. Fixing the items here should materially reduce barriers, but a clean
+re-test would not by itself establish WCAG conformance.</p>
+<h2>Appendix A — Page-level automated summary</h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th align="right">Distinct rule violations</th>
+<th align="right">Affected elements</th>
+<th align="right">Needs-review items</th>
+<th align="right">Passed automated rules</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Home</td>
+<td align="right">4</td>
+<td align="right">43</td>
+<td align="right">0</td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td>News</td>
+<td align="right">3</td>
+<td align="right">44</td>
+<td align="right">0</td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td>Tickets</td>
+<td align="right">4</td>
+<td align="right">40</td>
+<td align="right">0</td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td>Survey</td>
+<td align="right">4</td>
+<td align="right">41</td>
+<td align="right">0</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td>Template</td>
+<td align="right">4</td>
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td align="right"><strong>19 page/rule combinations</strong></td>
+<td align="right"><strong>203</strong></td>
+<td align="right"><strong>0</strong></td>
+<td align="right">Not summed as a score</td>
+</tr>
+</tbody></table>
+<h2>Appendix B — Manual results</h2>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Result</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Titles distinguish sampled pages</td>
+<td>Pass in sampled state</td>
+<td>Unique document titles in <code>manual-probes.json</code></td>
+</tr>
+<tr>
+<td>Document language</td>
+<td>Barrier found</td>
+<td><code>declaredLanguage: null</code> on all five pages</td>
+</tr>
+<tr>
+<td>Keyboard focus retention/visibility</td>
+<td>Barrier found</td>
+<td>32 scoped elements failed to retain focus</td>
+</tr>
+<tr>
+<td>Headings and landmarks</td>
+<td>Barrier found</td>
+<td>0 headings and 0 landmarks in each <code>#page</code> region</td>
+</tr>
+<tr>
+<td>Narrow reflow</td>
+<td>Barrier found</td>
+<td>800px content at 320px; 480px overflow on every page</td>
+</tr>
+<tr>
+<td>Image purpose</td>
+<td>Barrier found/needs content judgement</td>
+<td>150 missing alternatives; context review required</td>
+</tr>
+<tr>
+<td>Control names</td>
+<td>Barrier found</td>
+<td>Automated label/select rules plus Survey inventory</td>
+</tr>
+<tr>
+<td>Contrast</td>
+<td>Barrier found</td>
+<td>13 confirmed elements; example ratio 3.88:1</td>
+</tr>
+<tr>
+<td>Screen-reader/browser user test</td>
+<td>Not performed</td>
+<td>Outside this triage&#39;s demonstrated scope</td>
+</tr>
+<tr>
+<td>Media, authentication, complex dynamic states</td>
+<td>N/A/not sampled</td>
+<td>No representative content or state in scope</td>
+</tr>
+</tbody></table>
+<h2>Appendix C — Evidence index</h2>
+<ul>
+<li><code>evidence/2026-07-20/summary.json</code> — configuration and page counts</li>
+<li><code>evidence/2026-07-20/{page}.json</code> — raw axe results, selectors, HTML, help URLs</li>
+<li><code>evidence/2026-07-20/manual-probes.json</code> — structure, focus, and reflow probes</li>
+<li><code>evidence/2026-07-20/screenshots/</code> — full desktop and 320px screenshots</li>
+<li><code>pages.json</code> and <code>scripts/</code> — exact page scope and repeatable collection code</li>
+</ul>
+<p>Primary references: <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a>,
+<a href="https://www.w3.org/WAI/test-evaluate/tools/selecting/">W3C evaluation-tool limitations</a>,
+and <a href="https://www.w3.org/WAI/test-evaluate/preliminary/">W3C Easy Checks</a>.</p>
+
+  </main>
+</body>
+</html>
