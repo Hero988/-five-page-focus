@@ -93,6 +93,16 @@ h2 { margin: 0 0 1rem; font-size: clamp(1.8rem, 4vw, 3rem); }
 .site-footer { padding: 2.5rem 0; color: #dbeafe; background: #091f32; }
 .footer-grid { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 2rem; }
 .footer-grid p { margin: 0; }
+.site-footer a { color: #bae6fd; }
+
+.policy-main { padding: clamp(3rem, 7vw, 6rem) 0; }
+.narrow { max-width: 52rem; }
+.policy-main h1 { max-width: none; font-size: clamp(2.3rem, 6vw, 4.2rem); }
+.policy-main h2 { margin-top: 2.5rem; font-size: clamp(1.45rem, 3vw, 2rem); }
+.policy-main h3 { margin-top: 2rem; color: var(--navy); }
+.policy-main li + li { margin-top: .5rem; }
+.policy-notice { margin: 1.5rem 0; padding: 1rem 1.2rem; border-left: .35rem solid #a34a00; background: #fff7ed; }
+.copy-block { padding: 1rem; border: 1px solid var(--line); border-radius: .5rem; background: var(--surface); white-space: pre-wrap; }
 
 @media (max-width: 760px) {
   .header-inner { align-items: flex-start; flex-direction: column; padding: 1rem 0; }

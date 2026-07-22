@@ -7,6 +7,8 @@ prioritised remediation backlog instead of an unreviewed scanner dump.
 - Open `sample-report.html` for the standalone browser version.
 - If GitHub Pages is enabled, `index.html` provides the short method overview and links
   to the browser report.
+- The static privacy, service-terms and safe-intake pages provide the policy boundary
+  for the future £199 review without collecting data through this site.
 
 The example uses W3C's deliberately inaccessible CityLights “Before” demonstration.
 It consolidates 203 automated affected elements and manual observations into eight
@@ -36,6 +38,8 @@ Five Page Focus sells a £29 local toolkit that packages this workflow with pinn
 Playwright and axe-core dependencies, machine-assisted probes, a 12-part manual
 checklist, report templates, a renderer, and the completed demonstration. This free
 repository is useful without buying it and does not contain the reusable paid kit.
+It also contains no form, tracker, cookie, remote font, customer evidence, payment
+credential or live £199 checkout.
 
 [View the £29 Five Page Focus Accessibility Triage Kit on Gumroad](https://gissuliman.gumroad.com/l/five-page-accessibility-triage-kit?utm_source=github&utm_medium=repository&utm_campaign=five_page_workflow)
 
