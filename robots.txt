@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hero988.github.io/-five-page-focus/sitemap.xml
